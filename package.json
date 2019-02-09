@@ -2,6 +2,9 @@
     "name": "bloccit",
     "version": "1.0.0",
     "description": "A Reddit-like application for users to discuss and share content",
+    "engines": {
+        "node": "11.8.0"
+    },
     "main": "src/server.js",
     "scripts": {
         "test": "export NODE_ENV=test && jasmine",
