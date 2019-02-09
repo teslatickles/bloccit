@@ -1,17 +1,25 @@
 {
-  "name": "bloccit",
-  "version": "1.0.0",
-  "description": "A Reddit-like application for users to discuss and share content",
-  "main": "src/server.js",
-  "scripts": {
-    "test": "export NODE_ENV=test && jasmine"
-  },
-  "keywords": [
-    "bloc",
-    "reddit",
-    "MVC",
-    "express"
-  ],
-  "author": "teslatickles@hunterhartline <hunterhartline@gmail.com> (https://github.com/teslatickles)",
-  "license": "MIT"
+    "name": "bloccit",
+    "version": "1.0.0",
+    "description": "A Reddit-like application for users to discuss and share content",
+    "main": "src/server.js",
+    "scripts": {
+        "test": "export NODE_ENV=test && jasmine",
+        "start": "node src/server.js"
+    },
+    "keywords": [
+        "bloc",
+        "reddit",
+        "MVC",
+        "express"
+    ],
+    "author": "teslatickles@hunterhartline <hunterhartline@gmail.com> (https://github.com/teslatickles)",
+    "license": "MIT",
+    "devDependencies": {
+        "jasmine": "^3.0.0",
+        "request": "^2.83.0"
+    },
+    "dependencies": {
+        "express": "^4.16.2"
+    }
 }
