@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         Topic.hasMany(models.Rule, {
             foreingnKey: "topicId",
-            as: "banners",
+            as: "rules",
         });
     };
     return Topic;
