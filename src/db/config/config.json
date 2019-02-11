@@ -23,6 +23,6 @@
         "database": "database_production",
         "host": "127.0.0.1",
         "dialect": "postgres",
-        "use_env_variable": "postgres://xygzftrjbrlucd:9d436a0ab3b814e08e98c5336a17c5fc06eefe13b3d416135b1755838ba405ae@ec2-107-21-224-76.compute-1.amazonaws.com:5432/d4knaoijou1h5j"
+        "use_env_variable": "postgres://xzsnaogiygbecw:f625affeed28da3d8aa9b433c347e45c6d0688a1de2ee86fd623139d3ae1083f@ec2-54-225-237-84.compute-1.amazonaws.com:5432/d8ll8hap5r7t3s"
     }
 }
