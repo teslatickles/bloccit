@@ -1,3 +1,4 @@
 /spec/integration/topics_spec.js
 spec/integration/static_spec.js
 src/db/seeds/20190211034540-topics.js
+spec/integration/adverts_spec.js
