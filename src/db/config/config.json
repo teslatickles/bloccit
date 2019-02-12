@@ -23,6 +23,8 @@
         "database": "d5sel9598j3nbk",
         "host": "ec2-54-243-128-95.compute-1.amazonaws.com",
         "dialect": "postgres",
+        "logging": false,
+        "operatorsAliases": false,
         "use_env_variable": "postgres://vlpjwsnjdondlb:7d8cdd09ff1f5f847bc00af26ed0a2098fe2c737fc93dbc767952281a77e953f@ec2-54-243-128-95.compute-1.amazonaws.com:5432/d5sel9598j3nbk"
     }
 }
