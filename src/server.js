@@ -20,6 +20,7 @@ function normalizePort(val) {
 }
 
 server.on("listening", () => {
+    // eslint-disable-next-line no-console
     console.log(`server is listening for requests on port ${server.address().port}`);
 });
 
