@@ -13,7 +13,6 @@ describe("Post", () => {
             })
                 .then((topic) => {
                     this.topic = topic;
-
                     Post.create({
                         title: "My first visit to Proxima Centauri b",
                         body: "I saw some rocks!",
