@@ -12,9 +12,6 @@
 
         <h1><%= topic.title %></h1>
 
-        <% if (topic.flair) { %>
-        <h5 style="<%= flair.color %>"><%= flair.name %></h5> <% } else { '' }%>
-
         <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
         <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
         <a href="/topics/<%= topic.id %>/flairs/new" class="btn btn-success">New Flair</a>
@@ -32,6 +29,20 @@
             </li>
             <%  })  %>
         </ul>
+
+        <hr>
+
+        <h1 style="color:gray">Flair</h1>
+
+        <ul class="list-group">
+            <% topic.flairs.forEach((flair) => { %>
+            <li class="list-group-item">
+                <a href="/topics/<%= topic.id %>/flairs/<%= flair.id %>" style="color:<%= flair.color %>">
+                    <%= flair.name %></a>
+            </li>
+            <% }) %>
+        </ul>
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

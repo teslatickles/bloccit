@@ -1,5 +1,6 @@
 const topicQueries = require("../db/queries.topics.js");
 
+
 module.exports = {
     index(req, res, next) {
         topicQueries.getAllTopics((err, topics) => {
@@ -27,7 +28,7 @@ module.exports = {
         });
     },
     show(req, res, next) {
-        topicQueries.getTopic(req.params.id, (err, topic) => {
+        topicQueries.getTopic(req.params.id, (err, topic, flair) => {
             if (err || topic === null) {
                 res.redirect(404, "/");
             } else {

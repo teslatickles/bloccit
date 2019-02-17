@@ -11,6 +11,5 @@ module.exports = {
         app.use(advertRoutes);
         app.use(postRoutes);
         app.use(flairRoutes);
-
     }
 }
