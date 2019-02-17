@@ -29,8 +29,8 @@ describe("routes : flairs", () => {
                             this.post = post;
 
                             Flair.create({
-                                name: "POPULAR",
-                                color: "green",
+                                name: "DIY",
+                                color: "indigo",
                                 topicId: this.topic.id
                             })
                                 .then((flair) => {
@@ -82,6 +82,9 @@ describe("routes : flairs", () => {
     describe("GET /topics/:topicId/flairs/:id", () => {
         it("should render a view with the selected flair", (done) => {
             request.get(`${base}/${this.topic.id}/flairs/${this.flair.id}`, (err, res, body) => {
+                // console.log("DEBUG GET `/flairs/:id` -START-");
+                // console.log(body);
+                // console.log("DEBUG =END=");
                 expect(err).toBeNull();
                 expect(body).toContain("DIY");
                 done();
@@ -106,7 +109,7 @@ describe("routes : flairs", () => {
             request.get(`${base}/${this.topic.id}/flairs/${this.flair.id}/edit`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain("Edit Flair");
-                expect(body).toContain("Wassily Kandinksy");
+                expect(body).toContain("DIY");
                 done();
             });
         });
@@ -116,7 +119,7 @@ describe("routes : flairs", () => {
             request.post({
                 url: `${base}/${this.topic.id}/flairs/${this.flair.id}/update`,
                 form: {
-                    name: "Igor Stravinsky",
+                    name: "Wassily Kandinsky",
                     color: "red"
                 }
             }, (err, res, body) => {
