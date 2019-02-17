@@ -45,12 +45,37 @@ describe("routes : posts", () => {
                 });
         });
     });
-    describe("GET /topics/:topicId/posts/new", () => {
+    describe("GET /topics/:topicId/flairs/new", () => {
         it("should render a new post form", (done) => {
             request.get(`${base}/${this.topic.id}/flairs/new`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain("New Flair");
                 done();
+            });
+        });
+    });
+    describe("POST /topics/:topicId/flairs/create", () => {
+        it("should create a new flair and refresh topic", (done) => {
+            const options = {
+                url: `${base}/${this.topic.id}/flairs/create`,
+                form: {
+                    name: "DIY",
+                    color: "indigo"
+                },
+            };
+            request.post(options, (err, res, body) => {
+                Flair.findOne({ where: { name: "DIY" } })
+                    .then((flair) => {
+                        expect(flair).not.toBeNull();
+                        expect(flair.name).toBe("DIY");
+                        expect(flair.color).toBe("indigo");
+                        expect(flair.topicId).not.toBeNull();
+                        done();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        done();
+                    });
             });
         });
     });
