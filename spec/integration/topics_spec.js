@@ -68,8 +68,7 @@ describe("routes: topics", () => {
                             console.log(err);
                             done();
                         });
-                }
-            );
+                });
         });
         it("should not create a new post that fails validations", (done) => {
             const options = {
@@ -82,7 +81,7 @@ describe("routes: topics", () => {
             request.post(options, (err, res, body) => {
                 Topic.findOne({ where: { title: "a" } })
                     .then((topic) => {
-                        expect(this.topic).toBeNull();
+                        expect(topic).toBeNull();
                         done();
                     })
                     .catch((err) => {
