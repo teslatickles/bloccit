@@ -9,6 +9,10 @@
     <main class="container">
         <% include ../static/partials/navbar.ejs %>
         <h1>Topics</h1>
+        <!-- this was (currentUser && currentUser.isAdmin()) -->
+        <% if(currentUser) { %>
+        <a href="/topics/new" class="btn btn-success">New Topic</a>
+        <% } %>
 
         <ul class="list-group">
             <!-- #1 -->
