@@ -124,6 +124,7 @@ describe("routes : flairs", () => {
                 }
             }, (err, res, body) => {
                 expect(res.statusCode).toBe(302);
+                console.log(err);
                 done();
             });
         });
