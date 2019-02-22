@@ -219,14 +219,12 @@ describe("routes: topics", () => {
                 }
             };
 
-            it("should create a new topic and redirect", (done) => {
+            it("should not create a new topic and redirect", (done) => {
                 request.post(options,
                     (err, res, body) => {
                         Topic.findOne({ where: { title: "Sonic Youth songs" } })
                             .then((topic) => {
-                                expect(res.statusCode).toBe(303);
-                                expect(topic.title).toBe("Sonic Youth songs");
-                                expect(topic.description).toBe("What's your favorite Sonic Youth song?");
+                                expect(topic).toBeNull();
                                 done();
                             })
                             .catch((err) => {
@@ -234,26 +232,6 @@ describe("routes: topics", () => {
                                 done();
                             });
                     });
-            });
-            it("should not create a new post that fails validations", (done) => {
-                const options = {
-                    url: `${base}create`,
-                    form: {
-                        title: "a",
-                        description: "b"
-                    }
-                };
-                request.post(options, (err, res, body) => {
-                    Topic.findOne({ where: { title: "a" } })
-                        .then((topic) => {
-                            expect(topic).toBeNull();
-                            done();
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            done();
-                        });
-                });
             });
         });
         describe("GET /topics/:id", () => {
@@ -267,7 +245,7 @@ describe("routes: topics", () => {
             });
         });
         describe("POST /topics/:id/destroy", () => {
-            it("should delete the topic with the associated ID", (done) => {
+            it("should not delete the topic with the associated ID", (done) => {
                 Topic.all()
                     .then((topics) => {
                         const topicCountBeforeDelete = topics.length;
@@ -277,7 +255,7 @@ describe("routes: topics", () => {
                             Topic.all()
                                 .then((topics) => {
                                     expect(err).toBeNull();
-                                    expect(topics.length).toBe(topicCountBeforeDelete - 1);
+                                    expect(topics.length).toBe(topicCountBeforeDelete);
                                     done();
                                 })
                         });
@@ -285,17 +263,17 @@ describe("routes: topics", () => {
             });
         });
         describe("GET /topics/:id/edit", () => {
-            it("should render a view with an edit topic form", (done) => {
+            it("should not render a view with an edit topic form", (done) => {
                 request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
                     expect(err).toBeNull();
-                    expect(body).toContain("Edit Topic");
+                    expect(body).not.toContain("Edit Topic");
                     expect(body).toContain("JS Frameworks");
                     done();
                 });
             });
         });
         describe("POST /topics/:id/update", () => {
-            it("should update the topic with the given values", (done) => {
+            it("should not update the topic with the given values", (done) => {
                 const options = {
                     url: `${base}${this.topic.id}/update`,
                     form: {
@@ -311,7 +289,7 @@ describe("routes: topics", () => {
                             where: { id: this.topic.id }
                         })
                             .then((topic) => {
-                                expect(topic.title).toBe("JavaScript Frameworks");
+                                expect(topic.title).toBe("JS Frameworks");
                                 done();
                             });
                     });

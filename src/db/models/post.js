@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            // made true for workaround
+            allowNull: true
         }
     }, {});
     Post.associate = function (models) {

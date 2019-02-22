@@ -10,7 +10,7 @@
         <% include ../static/partials/navbar.ejs %>
         <h1>Topics</h1>
         <!-- this was (currentUser && currentUser.isAdmin()) -->
-        <% if(currentUser) { %>
+        <% if(currentUser && currentUser.isAdmin()) { %>
         <a href="/topics/new" class="btn btn-success">New Topic</a>
         <% } %>
 
