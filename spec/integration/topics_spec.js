@@ -26,13 +26,25 @@ describe("routes: topics", () => {
     });
     describe("admin user performing CRUD actions for Topic", () => {
         beforeEach((done) => {
-            request.get({         // mock authentication
-                url: "http://localhost:3000/auth/fake",
-                form: {
-                    role: "admin"
-                }
-            }),
-                done();
+            User.create({
+                email: "admin@example.com",
+                password: "123456",
+                role: "admin"
+            })
+                .then((user) => {
+                    request.get({         // mock authentication
+                        url: "http://localhost:3000/auth/fake",
+                        form: {
+                            role: user.role,     // mock authenticate as admin user
+                            userId: user.id,
+                            email: user.email
+                        }
+                    },
+                        (err, res, body) => {
+                            done();
+                        }
+                    );
+                });
         });
         describe("GET /topics", () => {
 
@@ -68,8 +80,8 @@ describe("routes: topics", () => {
                     (err, res, body) => {
                         Topic.findOne({ where: { title: "Sonic Youth songs" } })
                             .then((topic) => {
-                                expect(this.topic.title).toBe("Sonic Youth songs");
-                                expect(this.topic.description).toBe("What's your favorite Sonic Youth song?");
+                                expect(topic.title).toBe("Sonic Youth songs");
+                                expect(topic.description).toBe("What's your favorite Sonic Youth song?");
                                 done();
                             })
                             .catch((err) => {
@@ -120,7 +132,6 @@ describe("routes: topics", () => {
         });
         describe("POST /topics/:id/update", () => {
             it("should update the topic with the given values", (done) => {
-
                 request.post({
                     url: `${base}${this.topic.id}/update`,
                     form: {
@@ -145,14 +156,26 @@ describe("routes: topics", () => {
     // end of admin context
     // begin member context
     describe("member user performing CRUD actions for Topic", () => {
-        beforeEach((done) => {  // before each suite in admin context
-            request.get({
-                url: "http://localhost:3000/auth/fake",
-                form: {
-                    role: "member"
-                }
-            });
-            done();
+        beforeEach((done) => {
+            User.create({
+                email: "admin@example.com",
+                password: "123456",
+                role: "member"
+            })
+                .then((user) => {
+                    request.get({         // mock authentication
+                        url: "http://localhost:3000/auth/fake",
+                        form: {
+                            role: user.role,     // mock authenticate as admin user
+                            userId: user.id,
+                            email: user.email
+                        }
+                    },
+                        (err, res, body) => {
+                            done();
+                        }
+                    );
+                });
         });
         describe("GET /topics", () => {
 

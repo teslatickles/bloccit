@@ -47,8 +47,6 @@ module.exports = {
             })
     },
     deleteTopic(req, callback) {
-
-        // #1
         return Topic.findById(req.params.id)
             .then((topic) => {
 
