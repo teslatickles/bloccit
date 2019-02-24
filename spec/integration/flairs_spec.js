@@ -141,7 +141,7 @@ describe("routes : flairs", () => {
                 (err, res, body) => {
 
                     expect(err).toBeNull();
-                    done();
+                    // done();
                     Flair.findOne({
                         where: { id: this.flair.id }
                     })
