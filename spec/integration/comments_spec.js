@@ -62,7 +62,7 @@ describe("routes : comments", () => {
     describe("guest attempting to perform CRUD actions for Comment", () => {
         beforeEach((done) => {
             request.get({
-                url: "http://local:3000/auth/fake",
+                url: "http://localhost:3000/auth/fake",
                 form: {
                     userId: 0
                 }
