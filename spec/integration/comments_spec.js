@@ -163,7 +163,7 @@ describe("routes : comments", () => {
         // #3
         describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
 
-            it("should delete the comment with the associated ID", (done) => {
+            it("should delete the comment with the associated ID if owner", (done) => {
                 Comment.all()
                     .then((comments) => {
                         const commentCountBeforeDelete = comments.length;
@@ -187,5 +187,44 @@ describe("routes : comments", () => {
             });
 
         });
+    });
+    describe("admin trying to perform CRUD actions", () => {
+        beforeEach((done) => {    // before each suite in this context
+            request.get({           // mock authentication
+                url: "http://localhost:3000/auth/fake",
+                form: {
+                    role: "member",     // mock authenticate as member user
+                    userId: this.user.id
+                }
+            },
+                (err, res, body) => {
+                    done();
+                }
+            );
+        });
+        describe("admin deleting comment", () => {
+            it("should delete the comment with the associated ID", (done) => {
+                Comment.all()
+                    .then((comments) => {
+                        const commentCountBeforeDelete = comments.length;
+
+                        expect(commentCountBeforeDelete).toBe(1);
+
+                        request.post(
+                            `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+                            (err, res, body) => {
+                                expect(res.statusCode).toBe(302);
+                                Comment.all()
+                                    .then((comments) => {
+                                        expect(err).toBeNull();
+                                        expect(comments.length).toBe(commentCountBeforeDelete - 1);
+                                        done();
+                                    })
+
+                            });
+                    })
+
+            });
+        })
     })
 });
