@@ -116,8 +116,59 @@ describe("routes : votes", () => {
         });
 
         describe("GET /topics/:topicId/posts/:postId/votes/upvote", () => {
-
             it("should create an upvote", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {               // confirm that an upvote was created
+                                expect(vote).not.toBeNull();
+                                expect(vote.value).toBe(1);
+                                expect(vote.userId).toBe(this.user.id);
+                                expect(vote.postId).toBe(this.post.id);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                    }
+                );
+            });
+            it("should not create an upvote of more than 1", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {               // confirm that an upvote was created
+                                expect(vote).not.toBeNull();
+                                expect(vote.value).not.toBeGreaterThan(1);
+                                expect(vote.userId).toBe(this.user.id);
+                                expect(vote.postId).toBe(this.post.id);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                    }
+                );
+            });
+            it("should not create an upvote where one already exists", (done) => {
                 const options = {
                     url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
                 };
@@ -173,8 +224,72 @@ describe("routes : votes", () => {
                     }
                 );
             });
+            it("should not create a downvote less than -1", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/downvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {               // confirm that a downvote was created
+                                expect(vote).not.toBeNull();
+                                expect(vote.value).not.toBeLessThan(-1);
+                                expect(vote.userId).toBe(this.user.id);
+                                expect(vote.postId).toBe(this.post.id);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                    }
+                );
+            });
+            it("should not create a downvote where one already exists", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/downvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {               // confirm that a downvote was created
+                                expect(vote).not.toBeNull();
+                                expect(vote.value).toBe(-1);
+                                expect(vote.userId).toBe(this.user.id);
+                                expect(vote.postId).toBe(this.post.id);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                    }
+                );
+            });
         });
+        describe("#getPoints()", () => {
+            it("should return a number of total votes for a post", (done) => {
 
+                Post.findOne({ where: { title: "My first visit to Proxima Centauri b" } })
+                    .then((post) => {
+                        post.getPoints()
+                            .then((points) => {
+                                expect(points).not.toBeNull();
+                                done();
+                            })
+                    })
+            })
+        })
     }); //end context for signed in user
 
 });
