@@ -288,6 +288,55 @@ describe("routes : votes", () => {
                     })
             })
         })
-    }); //end context for signed in user
-
+        describe("#hasUpvoteFor()", () => {
+            it("should return true if user has an upvote for a post", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {
+                                let hasUpvote = this.post.hasUpvoteFor(vote.userId);
+                                expect(hasUpvote).toBeTruthy();
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            })
+                    });
+            });
+        });
+        describe("#hasDownVoteFor()", () => {
+            it("should return true if user has a downvote for a post", (done) => {
+                const options = {
+                    url: `${base}${this.topic.id}/posts/${this.post.id}/votes/downvote`
+                };
+                request.get(options,
+                    (err, res, body) => {
+                        Vote.findOne({
+                            where: {
+                                userId: this.user.id,
+                                postId: this.post.id
+                            }
+                        })
+                            .then((vote) => {
+                                let hasDownVote = this.post.hasDownVoteFor(vote.userId);
+                                expect(hasDownVote).toBeTruthy();
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                    })
+            })
+        }); //end context for signed in user
+    });
 });
