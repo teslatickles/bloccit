@@ -282,11 +282,11 @@ describe("routes : votes", () => {
 
                 Post.findOne({ where: { title: "My first visit to Proxima Centauri b" } })
                     .then((post) => {
-                        this.vote = 1;
-                        post.getPoints().then((points) => {
-                            expect(points).not.toBeNull();
-                            done();
-                        })
+                        post.getPoints()
+                            .then((points) => {
+                                expect(points).not.toBeNull();
+                                done();
+                            })
                     })
             })
         })
