@@ -105,7 +105,7 @@ describe("Vote", () => {
                 })
                 .catch((err) => {
                     expect(err.message).toContain("Vote.userId cannot be null");
-                    expect(err.message).toContain("Vote.postid cannot be null");
+                    expect(err.message).toContain("Vote.postId cannot be null");
                     done();
                 });
         });

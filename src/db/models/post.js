@@ -42,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     };
     Post.prototype.getPoints = function () {
         // #1
-        if ((this.votes && this.votes.length === 0) || this.votes === null) return 0
+        console.log(this.votes);
+        if ((this.votes && this.votes.length === 0) || typeof this.votes === 'undefined') return 0
         // #2
         return this.votes
             .map((v) => { return v.value })
