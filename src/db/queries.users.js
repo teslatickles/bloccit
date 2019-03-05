@@ -46,6 +46,7 @@ module.exports = {
                                     User.scope({ method: ["showFavorites", id] }).all()
                                         .then((user_scope) => {
                                             console.log(user_scope);
+                                            result["user_scope"] = user_scope;
                                             callback(null, result);
                                         })
                                         .catch((err) => {

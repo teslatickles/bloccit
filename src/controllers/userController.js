@@ -49,7 +49,7 @@ module.exports = {
         res.redirect("/");
     },
     show(req, res, next) {
-
+        console.log(req.params.id);
         // #1
         userQueries.getUser(req.params.id, (err, result) => {
 
