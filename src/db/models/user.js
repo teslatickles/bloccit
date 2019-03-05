@@ -1,3 +1,6 @@
+/* eslint-disable array-element-newline */
+/* eslint-disable array-bracket-newline */
+/* eslint-disable object-shorthand */
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     var User = sequelize.define('User', {
@@ -38,6 +41,16 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Vote, {
             foreignKey: "userId",
             as: "votes"
+        });
+
+        User.addScope("showFavorites", (userId) => {
+            return {
+                include: [{
+                    model: models.Favorite
+                }],
+                where: { id: userId },
+                order: [["createdAt", "DESC"]]
+            }
         });
 
     };

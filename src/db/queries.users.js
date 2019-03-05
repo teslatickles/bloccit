@@ -43,11 +43,9 @@ module.exports = {
                                 .then((comments) => {
                                     // #7
                                     result["comments"] = comments;
-
-                                    Favorite.scope({ method: ["showAll", id] }).all()
-                                        .then((favorites) => {
-                                            // #7
-                                            result["favorites"] = favorites;
+                                    User.scope({ method: ["showFavorites", id] }).all()
+                                        .then((user_scope) => {
+                                            console.log(user_scope);
                                             callback(null, result);
                                         })
                                         .catch((err) => {
